@@ -1,5 +1,5 @@
 # MySensors
-LCD Display for Temp. Sensors
+LCD Display (16x2) for Temperature Sensors (DS18B20)
 
 This is a python script to display 3 Temperature sensors with th Current Time to a 16x2 LCD Display. 
 It's attached to a Raspberry Pi 3 running Reef-Pi in my custom enclosure, with an Optical Sensor and various LEDs. I really like it!
