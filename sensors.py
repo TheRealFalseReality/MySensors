@@ -105,7 +105,7 @@ def read_temp_c_TA():
     if equals_pos != -1:
         temp_string = lines[1][equals_pos+2:]
         # TEMP_STRING IS THE SENSOR OUTPUT, MAKE SURE IT'S AN INTEGER TO DO THE MATH
-        temp_c = (int(temp_string) / 1000.0) + 1.9
+        temp_c = (int(temp_string) / 1000.0) + cal_TA
         # temp_c = str(round(temp_c, 1)) # ROUND THE RESULT TO 1 PLACE AFTER THE DECIMAL, THEN CONVERT IT TO A STRING
         return temp_c
 
@@ -121,7 +121,7 @@ def read_temp_c_T1():
     if equals_pos != -1:
         temp_string = lines[1][equals_pos+2:]
         # TEMP_STRING IS THE SENSOR OUTPUT, MAKE SURE IT'S AN INTEGER TO DO THE MATH
-        temp_c = (int(temp_string) / 1000.0) - 3
+        temp_c = (int(temp_string) / 1000.0) + cal_T1
         # temp_c = str(round(temp_c, 1)) # ROUND THE RESULT TO 1 PLACE AFTER THE DECIMAL, THEN CONVERT IT TO A STRING
         return temp_c
 
@@ -134,7 +134,7 @@ def read_temp_c_T2():
     if equals_pos != -1:
         temp_string = lines[1][equals_pos+2:]
         # TEMP_STRING IS THE SENSOR OUTPUT, MAKE SURE IT'S AN INTEGER TO DO THE MATH
-        temp_c = int(temp_string) / 1000.0
+        temp_c = int(temp_string) / 1000.0 + cal_T2
         # temp_c = str(round(temp_c, 1)) # ROUND THE RESULT TO 1 PLACE AFTER THE DECIMAL, THEN CONVERT IT TO A STRING
         return temp_c
 
