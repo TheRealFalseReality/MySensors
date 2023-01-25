@@ -3,11 +3,23 @@ import time
 import os
 import glob
 from itertools import repeat
-import Adafruit_DHT
 import Adafruit_CharLCD as LCD
 import RPi.GPIO as GPIO
 import threading
 from datetime import datetime
+
+# ** Temperature Selection ** 0 = Fahrenheit, 1 = Celsius **
+temp_selection = 0
+
+# ** Calibration **
+#TA
+cal_TA = 1.9
+cal_T1 = -3
+cal_T2 = 0
+
+probe_TA = '28-8000003203d6'
+probe_T1 = '28-0305949722d7'
+probe_T2 = '28-031394976a24'
 
 # GPIO Setup
 ledPinF = 22
@@ -42,28 +54,19 @@ lcd_rows = 2
 lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7,
                            lcd_columns, lcd_rows, lcd_backlight)
 
-# ** Temperature Selection ** 0 = Fahrenheit, 1 = Celsius **
-temp_selection = 0
-
-# ** Calibration **
-#TA
-cal_TA = 1.9
-cal_T1 = -3
-cal_T2 = 0
-
 # 18B20 Temp. Probe
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
 base_dir = '/sys/bus/w1/devices/'
 
 # TA
-device_folder_TA = glob.glob(base_dir + '28-8000003203d6')[0]
+device_folder_TA = glob.glob(base_dir + probe_TA)[0]
 device_file_TA = device_folder_TA + '/w1_slave'
 # T1
-device_folder_T1 = glob.glob(base_dir + '28-0305949722d7')[0]
+device_folder_T1 = glob.glob(base_dir + probe_T1)[0]
 device_file_T1 = device_folder_T1 + '/w1_slave'
 # T2
-device_folder_T2 = glob.glob(base_dir + '28-031394976a24')[0]
+device_folder_T2 = glob.glob(base_dir + probe_T2)[0]
 device_file_T2 = device_folder_T2 + '/w1_slave'
 
 
@@ -185,14 +188,15 @@ def read_temp_f_T2():
 
 
 while True:
-    print("TA " + str(read_temp_c_TA()) + "C")
-    print("T1 " + str(read_temp_c_T1()) + "C")
-    print("T2 " + str(read_temp_c_T2()) + "C")
-    print("reload")
+    # print("TA " + str(read_temp_c_TA()) + "C")
+    # print("T1 " + str(read_temp_c_T1()) + "C")
+    # print("T2 " + str(read_temp_c_T2()) + "C")
+    # print("reload")
 
     # lcd.message(repeat(" ", 1))
     # lcd.message("%s" %time.strftime("%H:%M"))
     # lcd.message("%s" %time.strftime("%m/%d"))
+    lcd.clear()
     lcd.message(datetime.today().strftime("%I:%M%p"))
     lcd.message(repeat(" ", 1))
     if temp_selection == 1:
